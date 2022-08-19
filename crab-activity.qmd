@@ -10,6 +10,7 @@ executue:
 #| warning: false
 library(lterdatasampler)
 library(tidyverse)
+library(kableExtra)
 ?pie_crab
 
 ```
@@ -22,4 +23,22 @@ ggplot(data = pie_crab,
   labs(title = "Crab Graph",
        subtitle = "a beautiful story",
        caption = "Here is our crab graph. Take a look for yourself.")
+```
+
+-   To your document, add an unfinalized summary table containing the mean, standard deviation, and sample size of fiddler crab carapace widths by site (tip: use `round(mean(), 2)` to round a value to 2 decimal places)
+
+```{r}
+pie_crab_summary <- pie_crab %>% 
+  group_by(site) %>%
+  summarise(mean_size = round(mean(size),2), 
+            std_size = round(sd(size),2), 
+            sample_size = n())
+```
+
+-   prettify the table
+
+```{r}
+pie_crab_summary %>% 
+  kable(col.names = c("Site", "Mean Carapace Width (mm)","Std. Deviation Carapace Width (mm)", "Sample Size")) %>% 
+  kable_styling(bootstrap_options = "striped")
 ```
